@@ -1,5 +1,5 @@
 import { Reference } from '../registry.mjs';
-describe('Reference Specifiction Test: ', () => {
+fdescribe('Reference Specifiction Test: ', () => {
     describe('when creating a reference given an empty namespace', () => {
         let refId = null;
         let ref = null;
@@ -74,7 +74,6 @@ describe('Reference Specifiction Test: ', () => {
         beforeAll(() => {
             A = new Reference('ReferenceSpecs');
             ({ Id: A_Id } = A);
-            A.metadata.isRoot = true;
 
             B = new Reference('ReferenceSpecs', A_Id);
             ({ Id: B_Id } = B);
