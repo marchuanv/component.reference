@@ -65,8 +65,11 @@ describe('Reference Specifiction Test: ', () => {
     describe(`when getting an existing reference for the ${Animal.name} class given the namespace, Class and refName`, () => {
         let ref = null;
         beforeAll(() => {
-            new Reference('animal.cat', Animal, 'cat1');
-            ref = Reference.get('animal.cat', Animal, 'cat1');
+            const namespace = 'animal.cat';
+            const Class = Animal;
+            const refName = 'cat1';
+            new Reference(namespace, Class, refName);
+            ref = Reference.get(namespace, Class, refName);
         });
         it('should return a reference', () => {
             expect(ref).toBeDefined();
