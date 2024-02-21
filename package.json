@@ -32,6 +32,7 @@
         "component.specs": "marchuanv/component.specs",
         "component.uuid": "marchuanv/component.uuid",
         "component.namespace": "marchuanv/component.namespace",
-        "component.type": "marchuanv/component.type"
+        "component.type": "marchuanv/component.type",
+        "utils": "marchuanv/utils"
     }
 }

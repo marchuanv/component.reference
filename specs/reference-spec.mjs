@@ -9,8 +9,8 @@ describe('Reference Specifiction Test: ', () => {
             animalRef2 = new Reference('animal', Animal, 'dog');
         });
         it('should have equality when constructing', () => {
-            const animal1 = animalRef1.construct();
-            const animal2 = animalRef2.construct();
+            const animal1 = animalRef1.get();
+            const animal2 = animalRef2.get();
             expect(animal1).toBeDefined();
             expect(animal1).not.toBeNull();
             expect(animal1).toBeInstanceOf(Animal);
@@ -28,8 +28,8 @@ describe('Reference Specifiction Test: ', () => {
             animalRef2 = new Reference('animal', Animal, 'dog2');
         });
         it('should not have equality when constructing', () => {
-            const animal1 = animalRef1.construct();
-            const animal2 = animalRef2.construct();
+            const animal1 = animalRef1.get();
+            const animal2 = animalRef2.get();
 
             expect(animal1).toBeDefined();
             expect(animal1).not.toBeNull();
@@ -49,8 +49,8 @@ describe('Reference Specifiction Test: ', () => {
             animalRef2 = new Reference('animal.dog', Animal, 'dog');
         });
         it('should not have equality', () => {
-            const animal1 = animalRef1.construct();
-            const animal2 = animalRef2.construct();
+            const animal1 = animalRef1.get();
+            const animal2 = animalRef2.get();
 
             expect(animal1).toBeDefined();
             expect(animal1).not.toBeNull();
