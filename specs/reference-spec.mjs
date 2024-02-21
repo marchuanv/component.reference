@@ -62,4 +62,40 @@ describe('Reference Specifiction Test: ', () => {
             expect(animal1).not.toBe(animal2);
         });
     });
+    describe(`when getting an existing reference for the ${Animal.name} class given the namespace, Class and refName`, () => {
+        let ref = null;
+        beforeAll(() => {
+            new Reference('animal.cat', Animal, 'cat1');
+            ref = Reference.get('animal.cat', Animal, 'cat1');
+        });
+        it('should return a reference', () => {
+            expect(ref).toBeDefined();
+            expect(ref).not.toBeNull();
+            expect(ref).toBeInstanceOf(Reference);
+        });
+    });
+    describe(`when getting a reference that does not exist for the ${Animal.name} class given the namespace, Class and refName`, () => {
+        let error = null;
+        let namespace = null;
+        let Class = null;
+        let refName = null;
+        beforeAll(() => {
+            namespace = 'animal.cat';
+            Class = Animal;
+            refName = 'cat1';
+            new Reference(namespace, Animal, refName);
+            try {
+                refName = 'cat2';
+                Reference.get(namespace, Animal, refName);
+            } catch (err) {
+                error = err;
+            }
+        });
+        it('should raise an error', () => {
+            expect(error).toBeDefined();
+            expect(error).not.toBeNull();
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toBe(`reference not found for: ${JSON.stringify({ namespace, Class: Class.name, refName })}`);
+        });
+    });
 });
