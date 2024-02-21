@@ -1,6 +1,6 @@
-import { Reference } from './lib/reference.mjs';
+export { Namespace } from 'component.namespace';
 export { Specs } from 'component.specs';
+export { Type } from 'component.type';
 export { GUID } from 'component.uuid';
-export { TypeReference } from './lib/type-ref.mjs';
-export { Reference };
+export { Reference } from './lib/reference.mjs';
 

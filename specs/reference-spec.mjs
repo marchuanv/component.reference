@@ -1,5 +1,5 @@
 import { Reference } from '../registry.mjs';
-fdescribe('Reference Specifiction Test: ', () => {
+describe('Reference Specifiction Test: ', () => {
     describe('when creating a reference given an empty namespace', () => {
         let refId = null;
         let ref = null;
