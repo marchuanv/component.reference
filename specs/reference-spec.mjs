@@ -1,12 +1,13 @@
-import { Reference } from '../registry.mjs';
+import { GUID, Reference } from '../registry.mjs';
 import { Animal } from './index.mjs';
 describe('Reference Specifiction Test: ', () => {
-    describe(`when creating references for the ${Animal.name} class given the same namespace and reference names`, () => {
+    describe(`when creating references for the ${Animal.name} class given the same namespace and reference Id's`, () => {
         let animalRef1 = null;
         let animalRef2 = null;
         beforeAll(() => {
-            animalRef1 = new Reference('animal', Animal, 'dog');
-            animalRef2 = new Reference('animal', Animal, 'dog');
+            const refId = new GUID({ name: 'dog' });
+            animalRef1 = new Reference('animal', Animal, refId);
+            animalRef2 = new Reference('animal', Animal, refId);
         });
         it('should have equality when constructing', () => {
             const animal1 = animalRef1.get();
@@ -20,12 +21,14 @@ describe('Reference Specifiction Test: ', () => {
             expect(animal1).toBe(animal2);
         });
     });
-    describe(`when creating references for the ${Animal.name} class given the same namespace but different reference names`, () => {
+    describe(`when creating references for the ${Animal.name} class given the same namespace but different reference Id's`, () => {
         let animalRef1 = null;
         let animalRef2 = null;
         beforeAll(() => {
-            animalRef1 = new Reference('animal', Animal, 'dog1');
-            animalRef2 = new Reference('animal', Animal, 'dog2');
+            const refId1 = new GUID({ name: 'dog1' });
+            animalRef1 = new Reference('animal', Animal, refId1);
+            const refId2 = new GUID({ name: 'dog2' });
+            animalRef2 = new Reference('animal', Animal, refId2);
         });
         it('should not have equality when constructing', () => {
             const animal1 = animalRef1.get();
@@ -41,12 +44,13 @@ describe('Reference Specifiction Test: ', () => {
             expect(animal1).not.toBe(animal2);
         });
     });
-    describe(`when creating references for the ${Animal.name} class given different namespaces but the same reference names`, () => {
+    describe(`when creating references for the ${Animal.name} class given different namespaces but the same reference Id's`, () => {
         let animalRef1 = null;
         let animalRef2 = null;
         beforeAll(() => {
-            animalRef1 = new Reference('animal.cat', Animal, 'dog');
-            animalRef2 = new Reference('animal.dog', Animal, 'dog');
+            const refId = new GUID({ name: 'dog' });
+            animalRef1 = new Reference('animal.cat', Animal, refId);
+            animalRef2 = new Reference('animal.dog', Animal, refId);
         });
         it('should not have equality', () => {
             const animal1 = animalRef1.get();
@@ -62,14 +66,14 @@ describe('Reference Specifiction Test: ', () => {
             expect(animal1).not.toBe(animal2);
         });
     });
-    describe(`when getting an existing reference for the ${Animal.name} class given the namespace, Class and refName`, () => {
+    describe(`when getting an existing reference for the ${Animal.name} class given a namespace, Class and reference Id`, () => {
         let ref = null;
         beforeAll(() => {
             const namespace = 'animal.cat';
             const Class = Animal;
-            const refName = 'cat1';
-            new Reference(namespace, Class, refName);
-            ref = Reference.get(namespace, Class, refName);
+            const refId = new GUID({ name: 'cat1' });
+            new Reference(namespace, Class, refId);
+            ref = Reference.get(namespace, Class, refId);
         });
         it('should return a reference', () => {
             expect(ref).toBeDefined();
@@ -77,19 +81,19 @@ describe('Reference Specifiction Test: ', () => {
             expect(ref).toBeInstanceOf(Reference);
         });
     });
-    describe(`when getting a reference that does not exist for the ${Animal.name} class given the namespace, Class and refName`, () => {
+    describe(`when getting a reference that does not exist for the ${Animal.name} class given a namespace, Class and reference Id`, () => {
         let error = null;
         let namespace = null;
         let Class = null;
-        let refName = null;
+        let refId = null;
         beforeAll(() => {
             namespace = 'animal.cat';
             Class = Animal;
-            refName = 'cat1';
-            new Reference(namespace, Animal, refName);
+            refId = new GUID({ name: 'cat1' });
+            new Reference(namespace, Animal, refId);
             try {
-                refName = 'cat2';
-                Reference.get(namespace, Animal, refName);
+                refId = new GUID({ name: 'cat2' });
+                Reference.get(namespace, Animal, refId);
             } catch (err) {
                 error = err;
             }
@@ -98,7 +102,7 @@ describe('Reference Specifiction Test: ', () => {
             expect(error).toBeDefined();
             expect(error).not.toBeNull();
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe(`reference not found for: ${JSON.stringify({ namespace, Class: Class.name, refName })}`);
+            expect(error.message).toBe(`reference not found for: ${JSON.stringify({ namespace, Class: Class.name, refId: refId.toString() })}`);
         });
     });
 });
