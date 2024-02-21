@@ -1,122 +1,36 @@
-import { Reference } from '../registry.mjs';
+import { GUID, Reference } from '../registry.mjs';
+import { Animal } from './index.mjs';
 describe('Reference Specifiction Test: ', () => {
-    describe('when creating a reference given an empty namespace', () => {
-        let refId = null;
-        let ref = null;
-        let error = null;
+    describe(`when create a reference for the ${Animal.mane} class`, () => {
+        let animalRef = null;
         beforeAll(() => {
-            try {
-                ref = new Reference('');
-                ({ Id: refId } = ref);
-            } catch (err) {
-                console.log(err);
-                error = err;
-            }
+            animalRef = new Reference('animal', Animal);
         });
-        it('should raise an error', () => {
-            expect(error).toBeDefined();
-            expect(error).not.toBeNull();
-            expect(error.message).toBeDefined();
-            expect(error.message).not.toBeNull();
-            expect(error.message).toBe('The namespace argument is null, undefined or empty.');
-        });
-    });
-    describe('when creating a reference given an null namespace', () => {
-        let refId = null;
-        let ref = null;
-        let error = null;
-        beforeAll(() => {
-            try {
-                ref = new Reference(null);
-                ({ Id: refId } = ref);
-            } catch (err) {
-                console.log(err);
-                error = err;
-            }
-        });
-        it('should raise an error', () => {
-            expect(error).toBeDefined();
-            expect(error).not.toBeNull();
-            expect(error.message).toBeDefined();
-            expect(error.message).not.toBeNull();
-            expect(error.message).toBe('The namespace argument is null, undefined or empty.');
-        });
-    });
-    describe('when creating a reference given an undefined namespace', () => {
-        let refId = null;
-        let ref = null;
-        let error = null;
-        beforeAll(() => {
-            try {
-                ref = new Reference(undefined);
-                ({ Id: refId } = ref);
-            } catch (err) {
-                console.log(err);
-                error = err;
-            }
-        });
-        it('should raise an error', () => {
-            expect(error).toBeDefined();
-            expect(error).not.toBeNull();
-            expect(error.message).toBeDefined();
-            expect(error.message).not.toBeNull();
-            expect(error.message).toBe('The namespace argument is null, undefined or empty.');
-        });
-    });
-    describe('when finding references', () => {
-        let A_Id = null;
-        let B_Id = null;
-        let C_Id = null;
-        let A = null;
-        let B = null;
-        let C = null;
+        it(`should have equality when constructing references of the same ${Animal.name} class`, () => {
+            const animal1 = animalRef.construct(new GUID({ name: 'dog' }));
+            const animal2 = animalRef.construct(new GUID({ name: 'dog' }));
 
-        beforeAll(() => {
-            A = new Reference('ReferenceSpecs');
-            ({ Id: A_Id } = A);
+            expect(animal1).toBeDefined();
+            expect(animal1).not.toBeNull();
+            expect(animal1).toBeInstanceOf(Animal);
+            expect(animal2).toBeDefined();
+            expect(animal2).not.toBeNull();
+            expect(animal2).toBeInstanceOf(Animal);
 
-            B = new Reference('ReferenceSpecs', A_Id);
-            ({ Id: B_Id } = B);
-
-            C = new Reference('ReferenceSpecs', B_Id);
-            ({ Id: C_Id } = C);
+            expect(animal1).toBe(animal2);
         });
+        it(`should not have equality when constructing references of the same ${Animal.name} class`, () => {
+            const animal1 = animalRef.construct(new GUID({ name: 'dog1' }));
+            const animal2 = animalRef.construct(new GUID({ name: 'dog2' }));
 
-        it('B should reference A', () => {
-            const isRef = B.isAssociatedWith(A_Id);
-            expect(isRef).toBeTrue();
-        });
+            expect(animal1).toBeDefined();
+            expect(animal1).not.toBeNull();
+            expect(animal1).toBeInstanceOf(Animal);
+            expect(animal2).toBeDefined();
+            expect(animal2).not.toBeNull();
+            expect(animal2).toBeInstanceOf(Animal);
 
-        it('A should reference B', () => {
-            const isRef = A.isAssociatedWith(B_Id);
-            expect(isRef).toBeTrue();
-        });
-
-        it('B should reference C', () => {
-            const isRef = B.isAssociatedWith(C_Id);
-            expect(isRef).toBeTrue();
-        });
-
-        it('C should reference B', () => {
-            const isRef = C.isAssociatedWith(B_Id);
-            expect(isRef).toBeTrue();
-        });
-
-        it('should have metadata', () => {
-            const references = Array.from(Reference.nextRef());
-            const allMetadata = references.filter(ref => ref.metadata);
-            expect(allMetadata.length).toBe(references.length);
-        });
-
-        it('should iterator over all references including the root', () => {
-            const references = Array.from(Reference.nextRef());
-            const hasRoot = references.some(ref => ref.metadata.isRoot);
-            expect(hasRoot).toBeTrue();
-            const referenceIds = references.map(ref => ref.Id.toString());
-            expect(referenceIds).toContain(A_Id.toString());
-            expect(referenceIds).toContain(B_Id.toString());
-            expect(referenceIds).toContain(C_Id.toString());
-            expect(referenceIds.length).toBe(3);
+            expect(animal1).not.toBe(animal2);
         });
     });
 });
