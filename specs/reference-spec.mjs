@@ -1,6 +1,27 @@
 import { GUID, Reference } from '../registry.mjs';
-import { Animal } from './index.mjs';
+import { Animal, Dog } from './index.mjs';
 describe('Reference Specifiction Test: ', () => {
+    describe(`when creating references for the same instance of the ${Animal.name} class given the same namespace and reference Id's`, () => {
+        let animalRef1 = null;
+        let animalRef2 = null;
+        beforeAll(() => {
+            const refId = new GUID({ name: 'dog' });
+            const dog = new Dog();
+            animalRef1 = new Reference('animal', dog, refId);
+            animalRef2 = new Reference('animal', dog, refId);
+        });
+        it('should have equality', () => {
+            const animal1 = animalRef1.get();
+            const animal2 = animalRef2.get();
+            expect(animal1).toBeDefined();
+            expect(animal1).not.toBeNull();
+            expect(animal1).toBeInstanceOf(Animal);
+            expect(animal2).toBeDefined();
+            expect(animal2).not.toBeNull();
+            expect(animal2).toBeInstanceOf(Animal);
+            expect(animal1).toBe(animal2);
+        });
+    });
     describe(`when creating references for the ${Animal.name} class given the same namespace and reference Id's`, () => {
         let animalRef1 = null;
         let animalRef2 = null;
