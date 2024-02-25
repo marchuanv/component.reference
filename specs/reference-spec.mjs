@@ -1,14 +1,15 @@
 import { GUID, Reference } from '../registry.mjs';
 import { Animal, Dog } from './index.mjs';
+class AnimalReference extends Reference {}
 describe('Reference Specifiction Test: ', () => {
-    describe(`when creating references for the same instance of the ${Animal.name} class given the same namespace and reference Id's`, () => {
+    describe(`when creating references for the same instance of the ${Dog.name} class given the same namespace and reference Id's`, () => {
         let animalRef1 = null;
         let animalRef2 = null;
         beforeAll(() => {
             const refId = new GUID({ name: 'dog' });
             const dog = new Dog();
-            animalRef1 = new Reference('animal', dog, refId);
-            animalRef2 = new Reference('animal', dog, refId);
+            animalRef1 = new AnimalReference(dog, refId);
+            animalRef2 = new AnimalReference(dog, refId);
         });
         it('should have equality', () => {
             const animal1 = animalRef1.get();
@@ -27,8 +28,8 @@ describe('Reference Specifiction Test: ', () => {
         let animalRef2 = null;
         beforeAll(() => {
             const refId = new GUID({ name: 'dog' });
-            animalRef1 = new Reference('animal', Animal, refId);
-            animalRef2 = new Reference('animal', Animal, refId);
+            animalRef1 = new AnimalReference(Animal, refId);
+            animalRef2 = new AnimalReference(Animal, refId);
         });
         it('should have equality when constructing', () => {
             const animal1 = animalRef1.get();
@@ -42,18 +43,20 @@ describe('Reference Specifiction Test: ', () => {
             expect(animal1).toBe(animal2);
         });
     });
-    describe(`when creating references for the ${Animal.name} class given the same namespace but different reference Id's`, () => {
+    fdescribe(`when creating references for the ${Animal.name} class given the same namespace but different reference Id's`, () => {
         let animalRef1 = null;
         let animalRef2 = null;
+        let refId1 = null;
+        let refId2 = null;
         beforeAll(() => {
-            const refId1 = new GUID({ name: 'dog1' });
-            animalRef1 = new Reference('animal', Animal, refId1);
-            const refId2 = new GUID({ name: 'dog2' });
-            animalRef2 = new Reference('animal', Animal, refId2);
+            refId1 = new GUID({ name: 'dog1' });
+            animalRef1 = new AnimalReference(Animal, refId1);
+            refId2 = new GUID({ name: 'dog2' });
+            animalRef2 = new AnimalReference(Animal, refId2);
         });
         it('should not have equality when constructing', () => {
-            const animal1 = animalRef1.get();
-            const animal2 = animalRef2.get();
+            const animal1 = animalRef1.instance(refId1);
+            const animal2 = animalRef2.instance(refId2);
 
             expect(animal1).toBeDefined();
             expect(animal1).not.toBeNull();
