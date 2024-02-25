@@ -116,7 +116,6 @@ describe('Reference Specifiction Test: ', () => {
             Class = Animal;
             refId = new RefId();
             new AnimalReference(Animal, refId);
-            refId = new RefId();
             exists = Reference.has(Animal, refId);
         });
         it('should return true', () => {
