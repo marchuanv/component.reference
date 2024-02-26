@@ -1,6 +1,11 @@
+import { PropertyRegEx } from 'component.type';
 import { RefId, Reference } from '../registry.mjs';
 import { Animal, Dog } from './index.mjs';
-class AnimalReference extends Reference {}
+class AnimalReference extends Reference {
+    constructor(target, refId) {
+        super(target, refId, PropertyRegEx.DefaultGetterRegEx, PropertyRegEx.DefaultSetterRegEx);
+    }
+}
 describe('Reference Specifiction Test: ', () => {
     describe(`when creating references for the ${Dog.name} instance given a target object and refId`, () => {
         let animalRef1 = null;
