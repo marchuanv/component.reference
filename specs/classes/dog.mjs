@@ -1,3 +1,4 @@
+import { ReferenceOptions } from '../../registry.mjs';
 import {
     Animal,
     Food,
@@ -5,63 +6,57 @@ import {
 } from '../index.mjs';
 export class Dog extends Animal {
     /**
+     * @param { ReferenceOptions } options 
+    */
+    constructor(options = new ReferenceOptions()) {
+        super(options)
+    }
+    /**
      * @returns { String }
     */
     get name() {
-        return Property.get({ name: null }, String, Dog);
+        return Property.get({ name: null }, String);
     }
     /**
      * @param { String } value
     */
     set name(value) {
-        Property.set({ name: value }, String, Dog);
+        Property.set({ name: value }, String);
     }
     /**
      * @returns { Number }
     */
     get age() {
-        return Property.get({ age: null }, Number, Dog);
+        return Property.get({ age: null }, Number);
     }
     /**
      * @param { Number } value
     */
     set age(value) {
-        Property.set({ age: value }, Number, Dog);
+        Property.set({ age: value }, Number);
     }
     /**
      * @returns { Number }
     */
     get weight() {
-        return Property.get({ weight: null }, Number, Dog);
+        return Property.get({ weight: null }, Number);
     }
     /**
      * @param { Number } value
     */
     set weight(value) {
-        Property.set({ weight: value }, Number, Dog);
+        Property.set({ weight: value }, Number);
     }
     /**
      * @returns { Food }
     */
     get food() {
-        return Property.get({ food: null }, Food, Dog);
+        return Property.get({ food: null }, Food);
     }
     /**
      * @param { Food } value
     */
     set food(value) {
-        Property.set({ food: value }, Food, Dog);
-    }
-    /**
-     * @param { Number } meters
-    */
-    walk(meters) {
-
-    }
-    /**
-     * @returns { Boolean }
-    */
-    isExhausted() {
-
+        Property.set({ food: value }, Food);
     }
 }

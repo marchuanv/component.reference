@@ -1,28 +1,28 @@
-import { Property } from "./property.mjs";
-export class Animal {
+import { Reference, ReferenceOptions } from "../../registry.mjs";
+import { Property } from "../index.mjs";
+export class Animal extends Reference {
+    /**
+     * @param { ReferenceOptions } options 
+    */
+    constructor(options = new ReferenceOptions()) {
+        super(Animal, options);
+    }
     /**
      * @returns { String }
     */
     get type() {
-        return Property.get({ type: null }, String, Animal);
+        return Property.get({ type: null }, String);
     }
     /**
      * @param { String } value
     */
     set type(value) {
-        Property.set({ type: value }, String, Animal);
+        Property.set({ type: value }, String);
     }
     /**
      * @returns { Array<String> }
     */
     get vaccinationYears() {
-        return Property.get({ vaccinationYears: value }, Number, Animal);
-    }
-    /**
-     * @template T
-     * @param { T } type
-     * @returns { T }
-    */
-    animalType(type) {
+        return Property.get({ vaccinationYears: value }, Number);
     }
 }

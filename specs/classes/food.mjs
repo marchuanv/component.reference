@@ -1,29 +1,36 @@
+import { Reference, ReferenceOptions } from '../../registry.mjs';
 import {
     Property
 } from '../index.mjs';
-export class Food {
+export class Food extends Reference {
+    /**
+     * @param { ReferenceOptions } options 
+    */
+    constructor(options = new ReferenceOptions()) {
+        super(Food, options);
+    }
     /**
      * @returns { String }
     */
     get name() {
-        return Property.get({ name: null }, String, Food);
+        return Property.get({ name: null }, String);
     }
     /**
      * @param { String } value
     */
     set name(value) {
-        Property.set({ name: value }, String, Food);
+        Property.set({ name: value }, String);
     }
     /**
      * @returns { Boolean }
     */
     get isAdultFood() {
-        return Property.get({ isAdultFood: null }, Boolean, Food);
+        return Property.get({ isAdultFood: null }, Boolean);
     }
     /**
      * @param { Boolean } value
     */
     set isAdultFood(value) {
-        Property.set({ isAdultFood: value }, Boolean, Food);
+        Property.set({ isAdultFood: value }, Boolean);
     }
 }
