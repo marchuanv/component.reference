@@ -5,7 +5,7 @@ export class Animal extends Reference {
      * @param { ReferenceOptions } options 
     */
     constructor(options = new ReferenceOptions()) {
-        super(Animal, options);
+        super(options);
     }
     /**
      * @returns { String }

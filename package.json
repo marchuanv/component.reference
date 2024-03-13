@@ -32,7 +32,6 @@
         "component.namespace": "marchuanv/component.namespace",
         "component.specs": "marchuanv/component.specs",
         "component.uuid": "marchuanv/component.uuid",
-        "unique-names-generator": "^4.7.1",
         "utils": "marchuanv/utils"
     }
 }

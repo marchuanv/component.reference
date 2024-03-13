@@ -6,7 +6,7 @@ import {
 } from '../index.mjs';
 export class Dog extends Animal {
     /**
-     * @param { ReferenceOptions } options 
+     * @param { ReferenceOptions } options
     */
     constructor(options = new ReferenceOptions()) {
         super(options)

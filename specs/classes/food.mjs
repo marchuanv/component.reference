@@ -4,10 +4,10 @@ import {
 } from '../index.mjs';
 export class Food extends Reference {
     /**
-     * @param { ReferenceOptions } options 
+     * @param { ReferenceOptions } options
     */
     constructor(options = new ReferenceOptions()) {
-        super(Food, options);
+        super(options);
     }
     /**
      * @returns { String }
