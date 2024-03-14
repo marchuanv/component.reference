@@ -3,43 +3,49 @@ import { Animal, Dog, Food } from './index.mjs';
 describe('Reference Specifiction Test: ', () => {
     describe(`when constructing a ${Dog.name} reference given default reference options`, () => {
         it('should have equality and return different references', () => {
+
             const dogA = new Dog();
             const dogB = new Dog();
 
             expect(dogA).toBeDefined();
             expect(dogA).not.toBeNull();
             expect(dogA).toBeInstanceOf(Reference);
-
             expect(dogB).toBeDefined();
             expect(dogB).not.toBeNull();
             expect(dogB).toBeInstanceOf(Reference);
-
             expect(dogA).not.toBe(dogB);
 
-            const instanceA = dogA.get(Dog);
-            const instanceB = dogB.get(Dog);
+            const instanceA = dogA.get();
+            const instanceB = dogB.get();
 
             expect(instanceA).toBeDefined();
             expect(instanceA).not.toBeNull();
-            expect(instanceA).toBeInstanceOf(Dog);
+            expect(instanceA.targetClass).toBe(Dog);
+            expect(instanceA.Id).toBeDefined();
+            expect(instanceA.Id).not.toBeNull();
+            expect(instanceA.data).toBeDefined();
+            expect(instanceA.data).not.toBeNull();
 
             expect(instanceB).toBeDefined();
             expect(instanceB).not.toBeNull();
-            expect(instanceB).toBeInstanceOf(Dog);
+            expect(instanceB.targetClass).toBe(Dog);
+            expect(instanceB.Id).toBeDefined();
+            expect(instanceB.Id).not.toBeNull();
+            expect(instanceB.data).toBeDefined();
+            expect(instanceB.data).not.toBeNull();
 
-            expect(instanceA).not.toBe(instanceB);
+            expect(instanceA.Id).not.toBe(instanceB.Id);
         });
     });
     describe(`when constructing a ${Dog.name} reference given singleton reference options`, () => {
-        let dogA = null;
-        let dogB = null;
-        beforeAll(() => {
+        it('should have equality and retrieve the same reference data', () => {
+
             const refOptions = new ReferenceOptions();
             refOptions.isSingleton = true;
-            dogA = new Dog(refOptions);
-            dogB = new Dog(refOptions);
-        });
-        it('should have equality', () => {
+
+            const dogA = new Dog(refOptions);
+            const dogB = new Dog(refOptions);
+
             expect(dogA).toBeDefined();
             expect(dogA).not.toBeNull();
             expect(dogA).toBeInstanceOf(Reference);
@@ -47,39 +53,67 @@ describe('Reference Specifiction Test: ', () => {
             expect(dogB).not.toBeNull();
             expect(dogB).toBeInstanceOf(Reference);
             expect(dogA).toBe(dogB);
-        });
-        it('should get the same reference', () => {
-            const instanceA = dogA.get(Dog);
-            const instanceB = dogB.get(Dog);
+
+            const instanceA = dogA.get();
+            const instanceB = dogB.get();
+
             expect(instanceA).toBeDefined();
             expect(instanceA).not.toBeNull();
-            expect(instanceA).toBeInstanceOf(Dog);
+            expect(instanceA.targetClass).toBe(Dog);
+            expect(instanceA.Id).toBeDefined();
+            expect(instanceA.Id).not.toBeNull();
+            expect(instanceA.data).toBeDefined();
+            expect(instanceA.data).not.toBeNull();
+
             expect(instanceB).toBeDefined();
             expect(instanceB).not.toBeNull();
-            expect(instanceB).toBeInstanceOf(Dog);
-            expect(instanceA).toBe(instanceB);
+            expect(instanceB.targetClass).toBe(Dog);
+            expect(instanceB.Id).toBeDefined();
+            expect(instanceB.Id).not.toBeNull();
+            expect(instanceB.data).toBeDefined();
+            expect(instanceB.data).not.toBeNull();
+
+            expect(instanceA.Id).toBe(instanceB.Id);
         });
     });
     describe(`when constructing a ${Dog.name} reference given a ${Animal.name} target class and a singleton reference options`, () => {
-        let dogA = null;
-        let dogB = null;
-        beforeAll(() => {
+        it('should have equality and retrieve the same reference data', () => {
+
             const refOptions = new ReferenceOptions();
             refOptions.targetClass = Animal;
             refOptions.isSingleton = true;
-            dogA = new Dog(refOptions);
-            dogB = new Dog(refOptions);
-        });
-        it('should get the same reference', () => {
-            const instanceA = dogA.get(Dog);
-            const instanceB = dogB.get(Dog);
+
+            const dogA = new Dog(refOptions);
+            const dogB = new Dog(refOptions);
+
+            expect(dogA).toBeDefined();
+            expect(dogA).not.toBeNull();
+            expect(dogA).toBeInstanceOf(Reference);
+            expect(dogB).toBeDefined();
+            expect(dogB).not.toBeNull();
+            expect(dogB).toBeInstanceOf(Reference);
+            expect(dogA).toBe(dogB);
+
+            const instanceA = dogA.get();
+            const instanceB = dogB.get();
+
             expect(instanceA).toBeDefined();
             expect(instanceA).not.toBeNull();
-            expect(instanceA).toBeInstanceOf(Dog);
+            expect(instanceA.targetClass).toBe(Animal);
+            expect(instanceA.Id).toBeDefined();
+            expect(instanceA.Id).not.toBeNull();
+            expect(instanceA.data).toBeDefined();
+            expect(instanceA.data).not.toBeNull();
+
             expect(instanceB).toBeDefined();
             expect(instanceB).not.toBeNull();
-            expect(instanceB).toBeInstanceOf(Dog);
-            expect(instanceA).toBe(instanceB);
+            expect(instanceB.targetClass).toBe(Animal);
+            expect(instanceB.Id).toBeDefined();
+            expect(instanceB.Id).not.toBeNull();
+            expect(instanceB.data).toBeDefined();
+            expect(instanceB.data).not.toBeNull();
+
+            expect(instanceA.Id).toBe(instanceB.Id);
         });
     });
     describe(`when constructing a ${Dog.name} reference given a ${Food.name} target class`, () => {
