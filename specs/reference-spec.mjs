@@ -2,118 +2,146 @@ import { Reference, ReferenceOptions } from '../registry.mjs';
 import { Animal, Dog, Food } from './index.mjs';
 describe('Reference Specifiction Test: ', () => {
     describe(`when constructing a ${Dog.name} reference given default reference options`, () => {
-        it('should have equality and return different references', () => {
+        it('should have equality and return different reference data', () => {
+            try {
+                const dogA = new Dog();
+                const dogB = new Dog();
 
-            const dogA = new Dog();
-            const dogB = new Dog();
+                dogA.set({ message: 'different reference data' });
+                dogB.set({ message: 'different reference data' });
 
-            expect(dogA).toBeDefined();
-            expect(dogA).not.toBeNull();
-            expect(dogA).toBeInstanceOf(Reference);
-            expect(dogB).toBeDefined();
-            expect(dogB).not.toBeNull();
-            expect(dogB).toBeInstanceOf(Reference);
-            expect(dogA).not.toBe(dogB);
+                expect(dogA).toBeDefined();
+                expect(dogA).not.toBeNull();
+                expect(dogA).toBeInstanceOf(Reference);
+                expect(dogA.targetClass).toBeDefined();
+                expect(dogA.targetClass).not.toBeNull();
+                expect(dogA.targetClass).toBe(Dog);
+                expect(dogA.Id).toBeDefined();
+                expect(dogA.Id).not.toBeNull();
 
-            const instanceA = dogA.get();
-            const instanceB = dogB.get();
+                expect(dogB).toBeDefined();
+                expect(dogB).not.toBeNull();
+                expect(dogB).toBeInstanceOf(Reference);
+                expect(dogB.targetClass).toBeDefined();
+                expect(dogB.targetClass).not.toBeNull();
+                expect(dogB.targetClass).toBe(Dog);
+                expect(dogB.Id).toBeDefined();
+                expect(dogB.Id).not.toBeNull();
 
-            expect(instanceA).toBeDefined();
-            expect(instanceA).not.toBeNull();
-            expect(instanceA.targetClass).toBe(Dog);
-            expect(instanceA.Id).toBeDefined();
-            expect(instanceA.Id).not.toBeNull();
-            expect(instanceA.data).toBeDefined();
-            expect(instanceA.data).not.toBeNull();
+                expect(dogA.Id).not.toBe(dogB.Id);
+                expect(dogA).not.toBe(dogB);
 
-            expect(instanceB).toBeDefined();
-            expect(instanceB).not.toBeNull();
-            expect(instanceB.targetClass).toBe(Dog);
-            expect(instanceB.Id).toBeDefined();
-            expect(instanceB.Id).not.toBeNull();
-            expect(instanceB.data).toBeDefined();
-            expect(instanceB.data).not.toBeNull();
+                const data1 = dogA.get();
+                const data2 = dogB.get();
 
-            expect(instanceA.Id).not.toBe(instanceB.Id);
+                expect(data1).toBeDefined();
+                expect(data1).not.toBeNull();
+
+                expect(data2).toBeDefined();
+                expect(data2).not.toBeNull();
+
+                expect(data1).not.toBe(data2);
+            } catch (error) {
+                console.log(error);
+                fail('did not expect any errors.');
+            }
         });
     });
     describe(`when constructing a ${Dog.name} reference given singleton reference options`, () => {
         it('should have equality and retrieve the same reference data', () => {
+            try {
+                const refOptions = new ReferenceOptions();
+                refOptions.isSingleton = true;
 
-            const refOptions = new ReferenceOptions();
-            refOptions.isSingleton = true;
+                const dogA = new Dog(refOptions);
+                const dogB = new Dog(refOptions);
 
-            const dogA = new Dog(refOptions);
-            const dogB = new Dog(refOptions);
+                dogA.set({ message: 'same reference data' });
 
-            expect(dogA).toBeDefined();
-            expect(dogA).not.toBeNull();
-            expect(dogA).toBeInstanceOf(Reference);
-            expect(dogB).toBeDefined();
-            expect(dogB).not.toBeNull();
-            expect(dogB).toBeInstanceOf(Reference);
-            expect(dogA).toBe(dogB);
+                expect(dogA).toBeDefined();
+                expect(dogA).not.toBeNull();
+                expect(dogA).toBeInstanceOf(Reference);
+                expect(dogA.targetClass).toBeDefined();
+                expect(dogA.targetClass).not.toBeNull();
+                expect(dogA.targetClass).toBe(Dog);
+                expect(dogA.Id).toBeDefined();
+                expect(dogA.Id).not.toBeNull();
 
-            const instanceA = dogA.get();
-            const instanceB = dogB.get();
+                expect(dogB).toBeDefined();
+                expect(dogB).not.toBeNull();
+                expect(dogB).toBeInstanceOf(Reference);
+                expect(dogB.targetClass).toBeDefined();
+                expect(dogB.targetClass).not.toBeNull();
+                expect(dogB.targetClass).toBe(Dog);
+                expect(dogB.Id).toBeDefined();
+                expect(dogB.Id).not.toBeNull();
 
-            expect(instanceA).toBeDefined();
-            expect(instanceA).not.toBeNull();
-            expect(instanceA.targetClass).toBe(Dog);
-            expect(instanceA.Id).toBeDefined();
-            expect(instanceA.Id).not.toBeNull();
-            expect(instanceA.data).toBeDefined();
-            expect(instanceA.data).not.toBeNull();
+                expect(dogA.Id).toBe(dogB.Id);
+                expect(dogA).toBe(dogB);
 
-            expect(instanceB).toBeDefined();
-            expect(instanceB).not.toBeNull();
-            expect(instanceB.targetClass).toBe(Dog);
-            expect(instanceB.Id).toBeDefined();
-            expect(instanceB.Id).not.toBeNull();
-            expect(instanceB.data).toBeDefined();
-            expect(instanceB.data).not.toBeNull();
+                const data1 = dogA.get();
+                const data2 = dogB.get();
 
-            expect(instanceA.Id).toBe(instanceB.Id);
+                expect(data1).toBeDefined();
+                expect(data1).not.toBeNull();
+
+                expect(data2).toBeDefined();
+                expect(data2).not.toBeNull();
+
+                expect(data1).toBe(data2);
+            } catch (error) {
+                console.log(error);
+                fail('did not expect any errors.');
+            }
         });
     });
     describe(`when constructing a ${Dog.name} reference given a ${Animal.name} target class and a singleton reference options`, () => {
         it('should have equality and retrieve the same reference data', () => {
+            try {
+                const refOptions = new ReferenceOptions();
+                refOptions.targetClass = Animal;
+                refOptions.isSingleton = true;
 
-            const refOptions = new ReferenceOptions();
-            refOptions.targetClass = Animal;
-            refOptions.isSingleton = true;
+                const dogA = new Dog(refOptions);
+                const dogB = new Dog(refOptions);
 
-            const dogA = new Dog(refOptions);
-            const dogB = new Dog(refOptions);
+                dogA.set({ message: 'same reference data' });
 
-            expect(dogA).toBeDefined();
-            expect(dogA).not.toBeNull();
-            expect(dogA).toBeInstanceOf(Reference);
-            expect(dogB).toBeDefined();
-            expect(dogB).not.toBeNull();
-            expect(dogB).toBeInstanceOf(Reference);
-            expect(dogA).toBe(dogB);
+                expect(dogA).toBeDefined();
+                expect(dogA).not.toBeNull();
+                expect(dogA).toBeInstanceOf(Reference);
+                expect(dogA.targetClass).toBeDefined();
+                expect(dogA.targetClass).not.toBeNull();
+                expect(dogA.targetClass).toBe(Animal);
+                expect(dogA.Id).toBeDefined();
+                expect(dogA.Id).not.toBeNull();
 
-            const instanceA = dogA.get();
-            const instanceB = dogB.get();
+                expect(dogB).toBeDefined();
+                expect(dogB).not.toBeNull();
+                expect(dogB).toBeInstanceOf(Reference);
+                expect(dogB.targetClass).toBeDefined();
+                expect(dogB.targetClass).not.toBeNull();
+                expect(dogB.targetClass).toBe(Animal);
+                expect(dogB.Id).toBeDefined();
+                expect(dogB.Id).not.toBeNull();
 
-            expect(instanceA).toBeDefined();
-            expect(instanceA).not.toBeNull();
-            expect(instanceA.targetClass).toBe(Animal);
-            expect(instanceA.Id).toBeDefined();
-            expect(instanceA.Id).not.toBeNull();
-            expect(instanceA.data).toBeDefined();
-            expect(instanceA.data).not.toBeNull();
+                expect(dogA.Id).toBe(dogB.Id);
+                expect(dogA).toBe(dogB);
 
-            expect(instanceB).toBeDefined();
-            expect(instanceB).not.toBeNull();
-            expect(instanceB.targetClass).toBe(Animal);
-            expect(instanceB.Id).toBeDefined();
-            expect(instanceB.Id).not.toBeNull();
-            expect(instanceB.data).toBeDefined();
-            expect(instanceB.data).not.toBeNull();
+                const data1 = dogA.get();
+                const data2 = dogB.get();
 
-            expect(instanceA.Id).toBe(instanceB.Id);
+                expect(data1).toBeDefined();
+                expect(data1).not.toBeNull();
+
+                expect(data2).toBeDefined();
+                expect(data2).not.toBeNull();
+
+                expect(data1).toBe(data2);
+            } catch (error) {
+                console.log(error);
+                fail('did not expect any errors.');
+            }
         });
     });
     describe(`when constructing a ${Dog.name} reference given a ${Food.name} target class`, () => {
