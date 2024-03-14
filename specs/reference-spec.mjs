@@ -2,30 +2,31 @@ import { Reference, ReferenceOptions } from '../registry.mjs';
 import { Animal, Dog, Food } from './index.mjs';
 describe('Reference Specifiction Test: ', () => {
     describe(`when constructing a ${Dog.name} reference given default reference options`, () => {
-        let dogA = null;
-        let dogB = null;
-        beforeAll(() => {
-            dogA = new Dog();
-            dogB = new Dog();
-        });
-        it('should have equality', () => {
+        it('should have equality and return different references', () => {
+            const dogA = new Dog();
+            const dogB = new Dog();
+
             expect(dogA).toBeDefined();
             expect(dogA).not.toBeNull();
             expect(dogA).toBeInstanceOf(Reference);
+
             expect(dogB).toBeDefined();
             expect(dogB).not.toBeNull();
             expect(dogB).toBeInstanceOf(Reference);
+
             expect(dogA).not.toBe(dogB);
-        });
-        it('should get different references', () => {
+
             const instanceA = dogA.get(Dog);
             const instanceB = dogB.get(Dog);
+
             expect(instanceA).toBeDefined();
             expect(instanceA).not.toBeNull();
             expect(instanceA).toBeInstanceOf(Dog);
+
             expect(instanceB).toBeDefined();
             expect(instanceB).not.toBeNull();
             expect(instanceB).toBeInstanceOf(Dog);
+
             expect(instanceA).not.toBe(instanceB);
         });
     });
