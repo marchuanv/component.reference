@@ -145,19 +145,17 @@ describe('Reference Specifiction Test: ', () => {
         });
     });
     describe(`when constructing a ${Dog.name} reference given a ${Food.name} target class`, () => {
-        let error = null;
-        beforeAll(() => {
+        it('should raise an error', () => {
             try {
                 const refOptions = new ReferenceOptions();
                 refOptions.targetClass = Food;
                 refOptions.isSingleton = true;
                 new Dog(refOptions);
-            } catch (err) {
-                error = err;
+                fail('expected an error');
+            } catch (error) {
+                console.log(error);
+                expect(error.message).toBe(`${Food.name} does not extend ${Dog.name}`);
             }
-        });
-        it('should raise an error', () => {
-            expect(error.message).toBe(`${Food.name} does not extend ${Dog.name}`);
         });
     });
     describe(`when constructing a ${Dog.name} reference given the target class is not a class`, () => {
@@ -173,7 +171,7 @@ describe('Reference Specifiction Test: ', () => {
             }
         });
         it('should raise an error', () => {
-            expect(error.message).toBe(`options: targetClass is not a class`);
+            expect(error.message).toBe(`new.target or targetClass option is not a class.`);
         });
     });
 });
