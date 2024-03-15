@@ -154,7 +154,7 @@ describe('Reference Specifiction Test: ', () => {
                 fail('expected an error');
             } catch (error) {
                 console.log(error);
-                expect(error.message).toBe(`${Food.name} does not extend ${Dog.name}`);
+                expect(error.message).toBe(`option: targetClass does not extend the Reference class.`);
             }
         });
     });
@@ -171,7 +171,7 @@ describe('Reference Specifiction Test: ', () => {
             }
         });
         it('should raise an error', () => {
-            expect(error.message).toBe(`new.target or targetClass option is not a class.`);
+            expect(error.message).toBe(`option: targetClass does not extend the Reference class.`);
         });
     });
 });
