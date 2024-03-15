@@ -1,11 +1,14 @@
-import { Reference, ReferenceOptions } from '../registry.mjs';
+import { Reference, ReferenceContext, ReferenceId } from '../registry.mjs';
 import { Animal, Dog, Food } from './index.mjs';
 describe('Reference Specifiction Test: ', () => {
-    describe(`when constructing a ${Dog.name} reference given default reference options`, () => {
+    describe(`when constructing a ${Dog.name} reference given default reference context`, () => {
         it('should have equality and return different reference data', () => {
             try {
-                const dogA = new Dog();
-                const dogB = new Dog();
+                const contextA = new ReferenceContext(Dog);
+                const contextB = new ReferenceContext(Dog);
+
+                const dogA = new Dog(contextA);
+                const dogB = new Dog(contextB);
 
                 dogA.set({ message: 'different reference data' });
                 dogB.set({ message: 'different reference data' });
@@ -47,14 +50,13 @@ describe('Reference Specifiction Test: ', () => {
             }
         });
     });
-    describe(`when constructing a ${Dog.name} reference given singleton reference options`, () => {
+    describe(`when constructing a ${Dog.name} reference given a singleton reference context`, () => {
         it('should have equality and retrieve the same reference data', () => {
             try {
-                const refOptions = new ReferenceOptions();
-                refOptions.isSingleton = true;
+                const refContext = new ReferenceContext(Dog, true);
 
-                const dogA = new Dog(refOptions);
-                const dogB = new Dog(refOptions);
+                const dogA = new Dog(refContext);
+                const dogB = new Dog(refContext);
 
                 dogA.set({ message: 'same reference data' });
 
@@ -95,15 +97,13 @@ describe('Reference Specifiction Test: ', () => {
             }
         });
     });
-    describe(`when constructing a ${Dog.name} reference given a ${Animal.name} target class and a singleton reference options`, () => {
+    describe(`when constructing a ${Dog.name} reference given a ${Animal.name} target class and a singleton reference context`, () => {
         it('should have equality and retrieve the same reference data', () => {
             try {
-                const refOptions = new ReferenceOptions();
-                refOptions.targetClass = Animal;
-                refOptions.isSingleton = true;
+                const refContext = new ReferenceContext(Animal, true);
 
-                const dogA = new Dog(refOptions);
-                const dogB = new Dog(refOptions);
+                const dogA = new Dog(refContext);
+                const dogB = new Dog(refContext);
 
                 dogA.set({ message: 'same reference data' });
 
@@ -144,34 +144,77 @@ describe('Reference Specifiction Test: ', () => {
             }
         });
     });
-    describe(`when constructing a ${Dog.name} reference given a ${Food.name} target class`, () => {
-        it('should raise an error', () => {
+    describe(`when constructing a ${Dog.name} reference given a ${Dog.name} target in a non-singleton reference context and a reference Id`, () => {
+        it('should have equality and retrieve the same reference data', () => {
             try {
-                const refOptions = new ReferenceOptions();
-                refOptions.targetClass = Food;
-                refOptions.isSingleton = true;
-                new Dog(refOptions);
-                fail('expected an error');
+                const commonRefId = new ReferenceId();
+                const refContextA = new ReferenceContext(Animal, false, commonRefId);
+                const refContextB = new ReferenceContext(Animal, false, commonRefId);
+
+                const dogA = new Dog(refContextA);
+                const dogB = new Dog(refContextB);
+
+                dogA.set({ message: 'same reference data' });
+
+                expect(dogA).toBeDefined();
+                expect(dogA).not.toBeNull();
+                expect(dogA).toBeInstanceOf(Reference);
+                expect(dogA.targetClass).toBeDefined();
+                expect(dogA.targetClass).not.toBeNull();
+                expect(dogA.targetClass).toBe(Animal);
+                expect(dogA.Id).toBeDefined();
+                expect(dogA.Id).not.toBeNull();
+
+                expect(dogB).toBeDefined();
+                expect(dogB).not.toBeNull();
+                expect(dogB).toBeInstanceOf(Reference);
+                expect(dogB.targetClass).toBeDefined();
+                expect(dogB.targetClass).not.toBeNull();
+                expect(dogB.targetClass).toBe(Animal);
+                expect(dogB.Id).toBeDefined();
+                expect(dogB.Id).not.toBeNull();
+
+                expect(dogA.Id).toBe(dogB.Id);
+                expect(dogA).toBe(dogB);
+
+                const data1 = dogA.get();
+                const data2 = dogB.get();
+
+                expect(data1).toBeDefined();
+                expect(data1).not.toBeNull();
+
+                expect(data2).toBeDefined();
+                expect(data2).not.toBeNull();
+
+                expect(data1).toBe(data2);
             } catch (error) {
                 console.log(error);
-                expect(error.message).toBe(`option: targetClass does not extend the Reference class.`);
+                fail('did not expect any errors.');
             }
         });
     });
-    describe(`when constructing a ${Dog.name} reference given the target class is not a class`, () => {
+    describe(`when constructing a ${Dog.name} reference given a ${Food.name} target class in the reference context`, () => {
+        it('should raise an error', () => {
+            try {
+                new Dog(new ReferenceContext(Food));
+                fail('expected an error');
+            } catch (error) {
+                console.log(error);
+                expect(error.message).toBe(`${Food.name} does not extend the ${Reference.name} class.`);
+            }
+        });
+    });
+    describe(`when constructing a ${Dog.name} reference given the target class is not a class in the reference context`, () => {
         let error = null;
         beforeAll(() => {
             try {
-                const refOptions = new ReferenceOptions();
-                refOptions.targetClass = {};
-                refOptions.isSingleton = true;
-                new Dog(refOptions);
+                new Dog(new ReferenceContext({}));
             } catch (err) {
                 error = err;
             }
         });
         it('should raise an error', () => {
-            expect(error.message).toBe(`option: targetClass does not extend the Reference class.`);
+            expect(error.message).toBe('The targetClass argument is not a class.');
         });
     });
 });

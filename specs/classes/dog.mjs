@@ -1,16 +1,9 @@
-import { ReferenceOptions } from '../../registry.mjs';
 import {
     Animal,
     Food,
     Property
 } from '../index.mjs';
 export class Dog extends Animal {
-    /**
-     * @param { ReferenceOptions } options
-    */
-    constructor(options = new ReferenceOptions()) {
-        super(options)
-    }
     /**
      * @returns { String }
     */
