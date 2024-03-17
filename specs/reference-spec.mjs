@@ -4,6 +4,7 @@ class TestTypeRegistry extends TypeRegister {}
 const dogTypeRegister = new TestTypeRegistry(null, Dog);
 const animalTypeRegister = new TestTypeRegistry(null, Animal);
 const foodTypeRegister = new TestTypeRegistry(null, Food);
+const stringTypeRegister = new TestTypeRegistry(null, String);
 describe('Reference Specifiction Test: ', () => {
     describe(`when constructing a ${Dog.name} reference given default reference context`, () => {
         it('should have equality and return different reference data', () => {
@@ -175,6 +176,55 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogB.targetClass).toBeDefined();
                 expect(dogB.targetClass).not.toBeNull();
                 expect(dogB.targetClass).toBe(Animal);
+                expect(dogB.Id).toBeDefined();
+                expect(dogB.Id).not.toBeNull();
+
+                expect(dogA.Id).toBe(dogB.Id);
+                expect(dogA).toBe(dogB);
+
+                const data1 = dogA.get();
+                const data2 = dogB.get();
+
+                expect(data1).toBeDefined();
+                expect(data1).not.toBeNull();
+
+                expect(data2).toBeDefined();
+                expect(data2).not.toBeNull();
+
+                expect(data1).toBe(data2);
+            } catch (error) {
+                console.log(error);
+                fail('did not expect any errors.');
+            }
+        });
+    });
+    describe(`when constructing a primitive type given a ${String.name} target in a non-singleton reference context and a reference Id`, () => {
+        it('should have equality and retrieve the same reference data', () => {
+            try {
+                const commonRefId = new ReferenceId();
+                const refContextA = new ReferenceContext(stringTypeRegister, false, commonRefId);
+                const refContextB = new ReferenceContext(stringTypeRegister, false, commonRefId);
+
+                const dogA = new Dog(refContextA);
+                const dogB = new Dog(refContextB);
+
+                dogA.set({ message: 'same reference data' });
+
+                expect(dogA).toBeDefined();
+                expect(dogA).not.toBeNull();
+                expect(dogA).toBeInstanceOf(Reference);
+                expect(dogA.targetClass).toBeDefined();
+                expect(dogA.targetClass).not.toBeNull();
+                expect(dogA.targetClass).toBe(String);
+                expect(dogA.Id).toBeDefined();
+                expect(dogA.Id).not.toBeNull();
+
+                expect(dogB).toBeDefined();
+                expect(dogB).not.toBeNull();
+                expect(dogB).toBeInstanceOf(Reference);
+                expect(dogB.targetClass).toBeDefined();
+                expect(dogB.targetClass).not.toBeNull();
+                expect(dogB.targetClass).toBe(String);
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
 
