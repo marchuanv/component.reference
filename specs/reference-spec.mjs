@@ -1,6 +1,11 @@
-import { Reference, ReferenceContext, ReferenceId, TypeRegister } from '../registry.mjs';
-import { Animal, Dog, Food, NonReferenceClass, Property } from './index.mjs';
-class TestTypeRegistry extends TypeRegister {}
+import { Type, Reference, ReferenceContext, ReferenceId, TypeRegister } from '../registry.mjs';
+import { Animal, Dog, Food, NonReferenceClass } from './index.mjs';
+class TestTypeRegistry extends TypeRegister {
+     constructor(typeRegisterId, type) {
+        new Type(type);
+        super(typeRegisterId, type);
+     }
+}
 const dogTypeRegister = new TestTypeRegistry(null, Dog);
 const animalTypeRegister = new TestTypeRegistry(null, Animal);
 const nonReferenceClassTypeRegister = new TestTypeRegistry(null, NonReferenceClass);
