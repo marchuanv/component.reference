@@ -1,8 +1,9 @@
 import { Reference, ReferenceContext, ReferenceId, TypeRegister } from '../registry.mjs';
-import { Animal, Dog, Food } from './index.mjs';
+import { Animal, Dog, Food, NonReferenceClass, Property } from './index.mjs';
 class TestTypeRegistry extends TypeRegister {}
 const dogTypeRegister = new TestTypeRegistry(null, Dog);
 const animalTypeRegister = new TestTypeRegistry(null, Animal);
+const nonReferenceClassTypeRegister = new TestTypeRegistry(null, NonReferenceClass);
 const foodTypeRegister = new TestTypeRegistry(null, Food);
 const stringTypeRegister = new TestTypeRegistry(null, String);
 describe('Reference Specifiction Test: ', () => {
@@ -247,14 +248,24 @@ describe('Reference Specifiction Test: ', () => {
             }
         });
     });
-    describe(`when constructing a ${Dog.name} reference given a ${Food.name} target class in the reference context`, () => {
-        it('should raise an error', () => {
+    describe(`when constructing a ${Dog.name} reference given a ${Food.name} reference class in the reference context`, () => {
+        it('should not raise an error', () => {
             try {
                 new Dog(new ReferenceContext(foodTypeRegister));
+            } catch (error) {
+                console.log(error);
+                fail('did not expect any errors.');
+            }
+        });
+    });
+    describe(`when constructing a ${Dog.name} reference given a ${NonReferenceClass.name}  target class in the reference context`, () => {
+        it('should raise an error', () => {
+            try {
+                new Dog(new ReferenceContext(nonReferenceClassTypeRegister));
                 fail('expected an error');
             } catch (error) {
                 console.log(error);
-                expect(error.message).toBe(`${Food.name} does not extend the ${Reference.name} class.`);
+                expect(error.message).toBe(`${NonReferenceClass.name} does not extend the ${Reference.name} class.`);
             }
         });
     });
