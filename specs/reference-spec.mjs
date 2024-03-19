@@ -1,4 +1,4 @@
-import { Type, Reference, ReferenceContext, ReferenceId, TypeRegister } from '../registry.mjs';
+import { Type, Reference, ReferenceContext, ReferenceId, TypeRegister, ReferenceStack, Store } from '../registry.mjs';
 import { Animal, Dog, Food, NonReferenceClass } from './index.mjs';
 class TestTypeRegistry extends TypeRegister {
      constructor(typeRegisterId, type) {
@@ -55,6 +55,34 @@ describe('Reference Specifiction Test: ', () => {
                 expect(data2).not.toBeNull();
 
                 expect(data1).not.toBe(data2);
+            } catch (error) {
+                console.log(error);
+                fail('did not expect any errors.');
+            }
+        });
+    });
+    describe(`when constructing a ${Dog.name} and ${Food} reference given default reference context`, () => {
+        it('should be able to build a reference from the reference stack', () => {
+            try {
+                const dogContextRefId = new ReferenceId();
+                const foodContextRefId = new ReferenceId();
+                const dogContext = new ReferenceContext(dogTypeRegister, false, dogContextRefId);
+                const foodContext = new ReferenceContext(foodTypeRegister, false, foodContextRefId);
+                const origDog = new Dog(dogContext);
+                const origFood = new Food(foodContext);
+                const referenceStack = new ReferenceStack();
+                {
+                    let { typeRegId } = referenceStack.get(Dog);
+                    const refContext = new ReferenceContext(new TestTypeRegistry(typeRegId), false, dogContextRefId);
+                    const dog = new Dog(refContext);
+                    expect(origDog).toBe(dog);
+                }
+                {
+                    let { typeRegId } = referenceStack.get(Food);
+                    const refContext = new ReferenceContext(new TestTypeRegistry(typeRegId), false, foodContextRefId);
+                    const food = new Food(refContext);
+                    expect(origFood).toBe(food);
+                }
             } catch (error) {
                 console.log(error);
                 fail('did not expect any errors.');
