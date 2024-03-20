@@ -33,6 +33,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
                 expect(dogA.Id).toBeInstanceOf(ReferenceId);
+                expect(dogA.exists).toBeTrue();
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
@@ -43,6 +44,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
                 expect(dogB.Id).toBeInstanceOf(ReferenceId);
+                expect(dogB.exists).toBeTrue();
 
                 expect(dogA.Id).not.toBe(dogB.Id);
                 expect(dogA).not.toBe(dogB);
@@ -82,6 +84,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
                 expect(dogA.Id).toBeInstanceOf(ReferenceId);
+                expect(dogA.exists).toBeTrue();
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
@@ -92,6 +95,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
                 expect(dogB.Id).toBeInstanceOf(ReferenceId);
+                expect(dogB.exists).toBeTrue();
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
@@ -131,6 +135,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
                 expect(dogA.Id).toBeInstanceOf(ReferenceId);
+                expect(dogA.exists).toBeTrue();
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
@@ -141,6 +146,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
                 expect(dogB.Id).toBeInstanceOf(ReferenceId);
+                expect(dogB.exists).toBeTrue();
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
@@ -182,6 +188,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
                 expect(dogA.Id).toBeInstanceOf(ReferenceId);
+                expect(dogA.exists).toBeTrue();
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
@@ -192,6 +199,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
                 expect(dogB.Id).toBeInstanceOf(ReferenceId);
+                expect(dogB.exists).toBeTrue();
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
@@ -233,6 +241,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
                 expect(dogA.Id).toBeInstanceOf(ReferenceId);
+                expect(dogA.exists).toBeTrue();
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
@@ -243,6 +252,7 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
                 expect(dogB.Id).toBeInstanceOf(ReferenceId);
+                expect(dogB.exists).toBeTrue();
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
