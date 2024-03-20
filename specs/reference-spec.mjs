@@ -1,10 +1,10 @@
-import { Type, Reference, ReferenceContext, ReferenceId, TypeRegister, Store } from '../registry.mjs';
+import { Reference, ReferenceContext, ReferenceId, Type, TypeRegister } from '../registry.mjs';
 import { Animal, Dog, Food, NonReferenceClass } from './index.mjs';
 class TestTypeRegistry extends TypeRegister {
-     constructor(typeRegisterId, type) {
+    constructor(typeRegisterId, type) {
         new Type(type);
         super(typeRegisterId, type);
-     }
+    }
 }
 const dogTypeRegister = new TestTypeRegistry(null, Dog);
 const animalTypeRegister = new TestTypeRegistry(null, Animal);
@@ -27,26 +27,28 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA).toBeDefined();
                 expect(dogA).not.toBeNull();
                 expect(dogA).toBeInstanceOf(Reference);
-                expect(dogA.targetClass).toBeDefined();
-                expect(dogA.targetClass).not.toBeNull();
-                expect(dogA.targetClass).toBe(Dog);
+                expect(dogA.type).toBeDefined();
+                expect(dogA.type).not.toBeNull();
+                expect(dogA.type).toBe(Dog);
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
+                expect(dogA.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
                 expect(dogB).toBeInstanceOf(Reference);
-                expect(dogB.targetClass).toBeDefined();
-                expect(dogB.targetClass).not.toBeNull();
-                expect(dogB.targetClass).toBe(Dog);
+                expect(dogB.type).toBeDefined();
+                expect(dogB.type).not.toBeNull();
+                expect(dogB.type).toBe(Dog);
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
+                expect(dogB.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogA.Id).not.toBe(dogB.Id);
                 expect(dogA).not.toBe(dogB);
 
-                const data1 = dogA.get();
-                const data2 = dogB.get();
+                const data1 = dogA.get(Object);
+                const data2 = dogB.get(Object);
 
                 expect(data1).toBeDefined();
                 expect(data1).not.toBeNull();
@@ -74,26 +76,28 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA).toBeDefined();
                 expect(dogA).not.toBeNull();
                 expect(dogA).toBeInstanceOf(Reference);
-                expect(dogA.targetClass).toBeDefined();
-                expect(dogA.targetClass).not.toBeNull();
-                expect(dogA.targetClass).toBe(Dog);
+                expect(dogA.type).toBeDefined();
+                expect(dogA.type).not.toBeNull();
+                expect(dogA.type).toBe(Dog);
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
+                expect(dogA.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
                 expect(dogB).toBeInstanceOf(Reference);
-                expect(dogB.targetClass).toBeDefined();
-                expect(dogB.targetClass).not.toBeNull();
-                expect(dogB.targetClass).toBe(Dog);
+                expect(dogB.type).toBeDefined();
+                expect(dogB.type).not.toBeNull();
+                expect(dogB.type).toBe(Dog);
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
+                expect(dogB.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
 
-                const data1 = dogA.get();
-                const data2 = dogB.get();
+                const data1 = dogA.get(Object);
+                const data2 = dogB.get(Object);
 
                 expect(data1).toBeDefined();
                 expect(data1).not.toBeNull();
@@ -121,26 +125,28 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA).toBeDefined();
                 expect(dogA).not.toBeNull();
                 expect(dogA).toBeInstanceOf(Reference);
-                expect(dogA.targetClass).toBeDefined();
-                expect(dogA.targetClass).not.toBeNull();
-                expect(dogA.targetClass).toBe(Animal);
+                expect(dogA.type).toBeDefined();
+                expect(dogA.type).not.toBeNull();
+                expect(dogA.type).toBe(Animal);
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
+                expect(dogA.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
                 expect(dogB).toBeInstanceOf(Reference);
-                expect(dogB.targetClass).toBeDefined();
-                expect(dogB.targetClass).not.toBeNull();
-                expect(dogB.targetClass).toBe(Animal);
+                expect(dogB.type).toBeDefined();
+                expect(dogB.type).not.toBeNull();
+                expect(dogB.type).toBe(Animal);
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
+                expect(dogB.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
 
-                const data1 = dogA.get();
-                const data2 = dogB.get();
+                const data1 = dogA.get(Object);
+                const data2 = dogB.get(Object);
 
                 expect(data1).toBeDefined();
                 expect(data1).not.toBeNull();
@@ -170,26 +176,28 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA).toBeDefined();
                 expect(dogA).not.toBeNull();
                 expect(dogA).toBeInstanceOf(Reference);
-                expect(dogA.targetClass).toBeDefined();
-                expect(dogA.targetClass).not.toBeNull();
-                expect(dogA.targetClass).toBe(Animal);
+                expect(dogA.type).toBeDefined();
+                expect(dogA.type).not.toBeNull();
+                expect(dogA.type).toBe(Animal);
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
+                expect(dogA.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
                 expect(dogB).toBeInstanceOf(Reference);
-                expect(dogB.targetClass).toBeDefined();
-                expect(dogB.targetClass).not.toBeNull();
-                expect(dogB.targetClass).toBe(Animal);
+                expect(dogB.type).toBeDefined();
+                expect(dogB.type).not.toBeNull();
+                expect(dogB.type).toBe(Animal);
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
+                expect(dogB.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
 
-                const data1 = dogA.get();
-                const data2 = dogB.get();
+                const data1 = dogA.get(Object);
+                const data2 = dogB.get(Object);
 
                 expect(data1).toBeDefined();
                 expect(data1).not.toBeNull();
@@ -219,26 +227,28 @@ describe('Reference Specifiction Test: ', () => {
                 expect(dogA).toBeDefined();
                 expect(dogA).not.toBeNull();
                 expect(dogA).toBeInstanceOf(Reference);
-                expect(dogA.targetClass).toBeDefined();
-                expect(dogA.targetClass).not.toBeNull();
-                expect(dogA.targetClass).toBe(String);
+                expect(dogA.type).toBeDefined();
+                expect(dogA.type).not.toBeNull();
+                expect(dogA.type).toBe(String);
                 expect(dogA.Id).toBeDefined();
                 expect(dogA.Id).not.toBeNull();
+                expect(dogA.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogB).toBeDefined();
                 expect(dogB).not.toBeNull();
                 expect(dogB).toBeInstanceOf(Reference);
-                expect(dogB.targetClass).toBeDefined();
-                expect(dogB.targetClass).not.toBeNull();
-                expect(dogB.targetClass).toBe(String);
+                expect(dogB.type).toBeDefined();
+                expect(dogB.type).not.toBeNull();
+                expect(dogB.type).toBe(String);
                 expect(dogB.Id).toBeDefined();
                 expect(dogB.Id).not.toBeNull();
+                expect(dogB.Id).toBeInstanceOf(ReferenceId);
 
                 expect(dogA.Id).toBe(dogB.Id);
                 expect(dogA).toBe(dogB);
 
-                const data1 = dogA.get();
-                const data2 = dogB.get();
+                const data1 = dogA.get(Object);
+                const data2 = dogB.get(Object);
 
                 expect(data1).toBeDefined();
                 expect(data1).not.toBeNull();

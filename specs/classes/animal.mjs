@@ -1,22 +1,9 @@
 import { Reference } from "../../registry.mjs";
-import { Property } from "../index.mjs";
 export class Animal extends Reference {
     /**
-     * @returns { String }
-    */
-    get type() {
-        return Property.get({ type: null }, String);
-    }
-    /**
-     * @param { String } value
-    */
-    set type(value) {
-        Property.set({ type: value }, String);
-    }
-    /**
-     * @returns { Array<String> }
+     * @returns { Number }
     */
     get vaccinationYears() {
-        return Property.get({ vaccinationYears: value }, Number);
+        return super.get({ vaccinationYears: value }, Number);
     }
 }
